@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>傈僳族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #d35400;
+            --secondary-color: #2980b9;
+            --accent-color: #f39c12;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-image: url(背景图.jpg);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>傈僳族文化</h1>
+            <div class="subtitle">横断山脉的彩虹民族 · 三江并流的千年传承</div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">傈僳文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#cuisine">特色饮食</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="历史.png" alt="傈僳族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>傈僳族源于古代氐羌族群,公元8世纪前生活在川滇交界地区,历经多次迁徙形成今日分布格局。民族史诗《创世纪》记载了其迁徙历史和文化起源。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="人口.png" alt="傈僳族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>中国境内傈僳族约70万人(2020年)，主要聚居在怒江傈僳族自治州，其余分布在丽江、保山、德宏等地。境外缅甸、泰国、印度也有分布。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="文字.png" alt="傈僳族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>傈僳语属汉藏语系藏缅语族，有四种文字：老傈僳文(大写拉丁字母)、新傈僳文(拼音)、竹书(音节文字)和缅甸傈僳文。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="female-costume">女性服饰</button>
+                <button class="tab-btn" data-tab="male-costume">男性服饰</button>
+                <button class="tab-btn" data-tab="accessories">特色配饰</button>
+            </div>
+            
+            <div id="female-costume" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="服饰2.png" alt="傈僳族女性服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="头饰.png" alt="傈僳族头饰" class="gallery-img">
+                        <div class="gallery-caption">欧勒帽头饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="劳作服饰.png" alt="傈僳族日常服饰" class="gallery-img">
+                        <div class="gallery-caption">日常劳作服</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="服饰细节.png" alt="傈僳族服饰细节" class="gallery-img">
+                        <div class="gallery-caption">刺绣纹样</div>
+                    </div>
+                </div>
+                <p>傈僳族女性服饰色彩艳丽，工艺精湛。头戴"欧勒帽"——用红白珊瑚珠串成，配银币、贝壳装饰；上衣为右衽短衫配彩色条纹坎肩，袖口绣几何花纹；下穿百褶长裙（黑/蓝底配红黄条纹），裙摆绣花边；配饰包括多层彩珠项链、藤篾腰箍和羊皮挎包。不同地区服饰略有差异，怒江地区以黑、红为主色调，丽江地区则更多使用蓝、绿色。</p>
+            </div>
+            
+            <div id="male-costume" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="服饰3.png" alt="傈僳族男性服饰" class="gallery-img">
+                        <div class="gallery-caption">传统男装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="猎人服饰.png" alt="傈僳族猎人装束" class="gallery-img">
+                        <div class="gallery-caption">猎人装束</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="节日服饰.png" alt="傈僳族节日服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                </div>
+                <p>男性服饰相对简洁实用：头缠黑布包头或缀绒球装饰；上衣为麻布对襟短衣，领口袖口镶彩条；下穿宽筒裤（黑色/蓝色）配绑腿；佩饰包括皮质箭囊和象征勇士身份的长刀。在重要场合，男子会佩戴银质胸牌和耳环，展示其社会地位。</p>
+            </div>
+            
+            <div id="accessories" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="首饰.png" alt="傈僳族首饰" class="gallery-img">
+                        <div class="gallery-caption">首饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="腰饰.png" alt="傈僳族腰饰" class="gallery-img">
+                        <div class="gallery-caption">腰饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="挎包.png" alt="傈僳族挎包" class="gallery-img">
+                        <div class="gallery-caption">挎包</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="刀具.png" alt="傈僳族刀具" class="gallery-img">
+                        <div class="gallery-caption">传统长刀</div>
+                    </div>
+                </div>
+                <p>傈僳族配饰兼具实用与审美功能：彩珠项链用珊瑚、玛瑙等串成，层数越多表示地位越高；藤篾腰箍既有装饰作用，也能保护腰部；羊皮挎包用于携带日常物品，表面绣有民族图案；长刀是男性必备工具和武器，刀鞘装饰精美。这些配饰往往代代相传，是家族历史的见证。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="节日3.png" alt="阔时节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">阔时节(新年节)</h3>
+                    <p><strong>时间：</strong>农历十二月(傈僳历新年,约公历1月)<br>
+                    <strong>特色：</strong>杀年猪、喝杵酒：家家宰猪，用竹筒共饮自酿杵酒；跳锅庄舞：围火塘通宵跳舞，唱《阔时木刮》古歌；射弩比赛：男子展示传统弩箭技艺，象征勇武。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="节日1.png" alt="刀杆节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">刀杆节（惊险祈福）</h3>
+                    <p><strong>时间：</strong>农历二月初八<br>
+                    <strong>特色：</strong>上刀山:赤脚攀爬36米高的刀梯(刀刃向上)；下火海：赤裸双脚踩踏烧红的炭火；寓意：纪念英雄王骥，展示勇气并驱邪祈福。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="节日2.png" alt="澡塘会" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">澡塘会(温泉狂欢)</h3>
+                    <p><strong>时间：</strong>春节前后（怒江地区）<br>
+                    <strong>特色：</strong>野外沐浴：男女分时段泡天然温泉，洗去病灾；对歌交友：青年男女即兴对唱情歌，寻觅伴侣。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="cuisine" class="section">
+        <h2 class="section-title">特色饮食</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="食物2.png" alt="漆油鸡" class="gallery-img">
+                <div class="gallery-caption">漆油鸡</div>
+            </div>
+            <div class="gallery-item">
+                <img src="食物3.png" alt="琵琶肉" class="gallery-img">
+                <div class="gallery-caption">琵琶肉</div>
+            </div>
+            <div class="gallery-item">
+                <img src="食物1.png" alt="包谷饭" class="gallery-img">
+                <div class="gallery-caption">包谷饭</div>
+            </div>
+            <div class="gallery-item">
+                <img src="杵酒.png" alt="杵酒" class="gallery-img">
+                <div class="gallery-caption">杵酒</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>漆油鸡（漆油炖鸡）</h3>
+            <p>傈僳族的标志性菜肴，用当地特有的漆树果实榨取的漆油（略带苦味）与土鸡炖煮，汤汁金黄浓郁，具有驱寒、滋补的功效。漆油虽可能引发部分人过敏，但傈僳人视其为天然补品，常用于产妇或体弱者调养。</p>
+            
+            <h3>琵琶肉</h3>
+            <p>将整猪去骨后填满盐、花椒等调料，缝合后压成琵琶状，用石板重压腌制数月，风味类似火腿，可切片煎烤或炖煮。是传统保存肉食的方式，适合高寒山区长期食用。</p>
+            
+            <h3>土家饭</h3>
+            <p>主食以粗粮为主：包谷饭（玉米）、洋芋饭（土豆）、荞麦粑粑等，体现山区特色。傈僳族喜欢火塘围餐、喝摔碗酒、饮油茶汤（咸香茶饮），饮食方式豪爽热情。</p>
+            
+            <h3>杵酒</h3>
+            <p>傈僳族传统酒饮，用玉米、高粱等粮食发酵制成，饮用时用竹竿（杵）搅动后吸饮，酒精度低而甘甜，是待客和节庆必备饮品。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>傈僳族主要分布在云南怒江傈僳族自治州（泸水、福贡、贡山、兰坪），以及丽江、迪庆、保山、德宏、大理、楚雄等地州。境外缅甸克钦邦、掸邦，泰国清迈、清莱等地也有分布。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>傈僳族多居住于怒江、澜沧江、金沙江三江并流区域的高山峡谷中,海拔多在1500-3000米之间。村寨多建于半山腰,依山就势，形成独特的山地聚落景观。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p> 傈僳族文化全景展示 </p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
