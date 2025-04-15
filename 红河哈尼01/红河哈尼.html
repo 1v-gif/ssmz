@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红河哈尼族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #d35400;
+            --secondary-color: #2980b9;
+            --accent-color: #f39c12;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-image: url(背景图.jpg);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://example.com/hani-header.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>红河哈尼族文化</h1>
+            <div class="subtitle">探索梯田上的千年文明</div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">哈尼文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#cuisine">特色饮食</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="01.png" alt="哈尼族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>红河哈尼族历史悠久，是古羌人南迁后与当地民族融合形成的民族。哈尼族先民在隋唐时期就已定居红河南岸，创造了举世闻名的哈尼梯田文化。红河哈尼族彝族自治州是哈尼族主要聚居区，被誉为"哈尼梯田之乡"。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="02.png" alt="哈尼族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>哈尼族是中国第16大少数民族，主要分布在云南红河、普洱、玉溪等地。红河哈尼族彝族自治州是最大的哈尼族聚居区，哈尼族人口约80万。元阳哈尼梯田是哈尼族最集中的地区。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="03.png" alt="哈尼族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>哈尼语属汉藏语系藏缅语族彝语支，分为哈雅、碧卡、豪白三大方言。历史上哈尼族没有本民族文字，使用刻木记事。1957年创制了拉丁字母拼音文字。哈尼族口头文学丰富，古歌《哈尼阿培聪坡坡》是民族史诗。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="female-costume">女性服饰</button>
+                <button class="tab-btn" data-tab="male-costume">男性服饰</button>
+                <button class="tab-btn" data-tab="accessories">特色配饰</button>
+            </div>
+            
+            <div id="female-costume" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="04.png" alt="哈尼族女性服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="05.png" alt="哈尼族头饰" class="gallery-img">
+                        <div class="gallery-caption">银泡头饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="06.png" alt="哈尼族日常服饰" class="gallery-img">
+                        <div class="gallery-caption">日常服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="07.png" alt="哈尼族服饰细节" class="gallery-img">
+                        <div class="gallery-caption">刺绣纹样</div>
+                    </div>
+                </div>
+                <p>红河哈尼族女性服饰以"服青饰红"为特色，以黑、蓝为底色，配以红、黄、绿等彩色装饰。上衣为右衽短衣，下穿百褶短裙或长裤。头饰多用银泡、银币、彩珠串成，重达数斤。不同支系、年龄段的服饰有明显差异，是识别身份的重要标志。</p>
+            </div>
+            
+            <div id="male-costume" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="08.png" alt="哈尼族男性服饰" class="gallery-img">
+                        <div class="gallery-caption">传统男装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="09.png" alt="哈尼族老人服饰" class="gallery-img">
+                        <div class="gallery-caption">长老服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="10.png" alt="哈尼族节日服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                </div>
+                <p>哈尼族男性服饰相对简朴，多为黑色或藏青色对襟上衣和宽腿裤，头缠黑色包头。长老服饰较为庄重，常配有银饰。男性服饰变化较少，主要通过腰带、挎包等配饰体现个人风格。</p>
+            </div>
+            
+            <div id="accessories" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="11.png" alt="哈尼族首饰" class="gallery-img">
+                        <div class="gallery-caption">银饰项圈</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="12.png" alt="哈尼族腰饰" class="gallery-img">
+                        <div class="gallery-caption">刺绣腰带</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="13.png" alt="哈尼族挎包" class="gallery-img">
+                        <div class="gallery-caption">绣花挎包</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="14.png" alt="哈尼族银饰" class="gallery-img">
+                        <div class="gallery-caption">银泡装饰</div>
+                    </div>
+                </div>
+                <p>哈尼族配饰以银饰为主，女性佩戴银泡、银币、银链等，重达数斤。腰带和挎包上的刺绣图案多取材于梯田、动植物等自然元素。银泡头饰是哈尼族最具特色的装饰，由数百个小银泡组成，阳光下闪闪发光。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="15.png" alt="十月年" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">十月年(扎勒特)</h3>
+                    <p><strong>时间：</strong>农历十月第一个龙日<br>
+                    <strong>特色：</strong>哈尼族最隆重的节日，相当于汉族春节。杀猪宰牛、打糍粑、祭祖祈福。举行长街宴，全村人沿街摆酒席，共庆丰收。夜晚青年男女对歌跳舞，通宵达旦。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="16.png" alt="六月节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">六月节(苦扎扎)</h3>
+                    <p><strong>时间：</strong>农历六月二十四日前后<br>
+                    <strong>特色：</strong>祭祀天神、驱邪祈福的节日。打磨秋千、打陀螺等传统活动。每家制作黄米饭、染红蛋，青年男女通过节日活动寻找意中人。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="17.png" alt="新米节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">新米节(尝新节)</h3>
+                    <p><strong>时间：</strong>稻谷成熟时<br>
+                    <strong>特色：</strong>庆祝丰收的节日。收割新谷后，先祭祖祭神，然后全家品尝新米。举行歌舞表演、体育竞赛等活动，表达对自然的感恩之情。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="cuisine" class="section">
+        <h2 class="section-title">特色饮食</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="18.png" alt="长街宴" class="gallery-img">
+                <div class="gallery-caption">长街宴</div>
+            </div>
+            <div class="gallery-item">
+                <img src="19.png" alt="酸汤鱼" class="gallery-img">
+                <div class="gallery-caption">酸汤鱼</div>
+            </div>
+            <div class="gallery-item">
+                <img src="20.png" alt="竹筒饭" class="gallery-img">
+                <div class="gallery-caption">竹筒饭</div>
+            </div>
+            <div class="gallery-item">
+                <img src="21.png" alt="糯米粑粑" class="gallery-img">
+                <div class="gallery-caption">糯米粑粑</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>长街宴</h3>
+            <p>哈尼族最富特色的饮食文化，在十月年期间举行。全村各家各户沿街摆出酒席，少则几十桌，多则上千桌，形成绵延数百米的长街宴。人们边吃边唱，共庆丰收，体现了哈尼族团结互助的精神。</p>
+            
+            <h3>酸汤鱼</h3>
+            <p>哈尼族特色菜肴，用稻田鱼和自制酸汤烹制而成。酸汤用米汤发酵制成，味道酸香开胃。鱼肉鲜嫩，汤色乳白，是哈尼族待客的上等菜肴。</p>
+            
+            <h3>竹筒饭</h3>
+            <p>哈尼族传统主食，将米和水装入新鲜竹筒，用火烤熟。米饭吸收竹香，清香可口。这种烹饪方式适应了山区生活，也体现了哈尼族的智慧。</p>
+            
+            <h3>糯米粑粑</h3>
+            <p>哈尼族节日食品，用糯米蒸熟后舂制而成，可蘸蜂蜜或包馅食用。粑粑柔软香甜，是节日祭祀和走亲访友的必备礼品。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>红河哈尼族彝族自治州是哈尼族主要聚居区，哈尼族人口约80万，占全州总人口的17%。主要分布在元阳、红河、绿春、金平等县，其中元阳县哈尼族人口最多，梯田文化最为典型。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>哈尼族多居住在红河南岸的哀牢山区，海拔在800-2000米之间。村寨多建于半山腰，上方是森林，下方是梯田，形成"森林-村寨-梯田-水系"四位一体的生态景观。元阳哈尼梯田已被列入世界文化遗产。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>红河哈尼族文化展示/p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
