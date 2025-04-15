@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西双版纳傣族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #1e8449;
+            --secondary-color: #e74c3c;
+            --accent-color: #f1c40f;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-image: url('1.jpg');
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://example.com/dai-header.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>西双版纳傣族文化</h1>
+            <div class="subtitle">热带雨林的明珠 · 孔雀之乡的传承</div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">傣族文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#architecture">建筑艺术</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\傣族\2.png" alt="傣族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>傣族是中国西南地区历史悠久的少数民族之一,与泰国的泰族、老挝的老族、缅甸的掸族等同源。公元1世纪就有关于傣族先民的记载，唐宋时期建立过勐泐国等地方政权。傣族自称"傣泐"、"傣那"等，意为"自由人"或"水边人"。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\傣族\3.png" alt="傣族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>中国境内傣族约132万人(2020年),主要分布在云南省西双版纳傣族自治州、德宏傣族景颇族自治州等地。西双版纳是傣族文化保存最完整的地区，占全州总人口的34%。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\傣族\4.png" alt="傣族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>傣语属汉藏语系壮侗语族壮傣语支，分为傣泐、傣那等方言。傣族有自己的文字，西双版纳使用傣泐文(圆体傣文)，德宏使用傣那文(方体傣文)。傣族创世史诗《巴塔麻嘎捧尚罗》是重要的文化遗产。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="architecture" class="section">
+        <h2 class="section-title">建筑艺术</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="traditional-house">民居建筑</button>
+                <button class="tab-btn" data-tab="temple-architecture">宗教建筑</button>
+                <button class="tab-btn" data-tab="modern-blend">现代融合</button>
+            </div>
+            
+            <div id="traditional-house" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\5.png" alt="傣族竹楼" class="gallery-img">
+                        <div class="gallery-caption">干栏式竹楼</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\6.png" alt="傣族民居" class="gallery-img">
+                        <div class="gallery-caption">传统民居</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\7.png" alt="傣族村寨" class="gallery-img">
+                        <div class="gallery-caption">傣族村寨</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\8.png" alt="傣族建筑细节" class="gallery-img">
+                        <div class="gallery-caption">建筑装饰</div>
+                    </div>
+                </div>
+                <p>傣族传统民居为干栏式建筑，竹木结构，分上下两层，上层住人，下层饲养牲畜或堆放农具。屋顶呈"人"字形，坡度较大，利于排水。建筑适应热带气候，通风防潮。村寨多依水而建，布局自然，周围种植椰子树、芭蕉树等热带植物，形成独特的景观。</p>
+            </div>
+            
+            <div id="temple-architecture" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\9.png" alt="傣族佛寺" class="gallery-img">
+                        <div class="gallery-caption">傣族佛寺</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\10.png" alt="佛塔" class="gallery-img">
+                        <div class="gallery-caption">傣族佛塔</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\11.png" alt="宗教建筑" class="gallery-img">
+                        <div class="gallery-caption">宗教建筑</div>
+                    </div>
+                </div>
+                <p>傣族普遍信仰南传上座部佛教，佛寺(缅寺)是村寨中最精美的建筑。佛寺多为砖木结构，重檐歇山顶，屋脊装饰繁复，常有孔雀、龙等吉祥动物造型。佛塔形式多样，如景洪曼飞龙塔、勐海景真八角亭等。佛寺不仅是宗教场所，也是文化教育中心。</p>
+            </div>
+            
+            <div id="modern-blend" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\12.png" alt="现代傣族建筑" class="gallery-img">
+                        <div class="gallery-caption">现代民居</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\13.png" alt="傣族风格酒店" class="gallery-img">
+                        <div class="gallery-caption">特色酒店</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\傣族\14.png" alt="公共建筑" class="gallery-img">
+                        <div class="gallery-caption">公共建筑</div>
+                    </div>
+                </div>
+                <p>当代傣族地区建筑在保留传统元素基础上不断创新。新建民居保留干栏式特点但使用现代材料；旅游区建筑融合傣族风格与现代功能；公共建筑如告庄西双景、傣族园等，既体现民族特色又满足现代需求，形成独特的建筑风貌。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\傣族\15.png" alt="傣族女性服饰" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">女性服饰</h3>
+                    <p>傣族女性服饰以色彩艳丽、线条优美著称。上穿紧身短衣，下着筒裙，腰间系银腰带。筒裙长及脚踝，多用绸缎制作，图案精美。发髻高挽，插鲜花或金银饰品。节日盛装更加华丽，配戴金银首饰、鲜花等。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\傣族\16.png" alt="傣族男性服饰" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">男性服饰</h3>
+                    <p>傣族男性传统服饰较为简洁：上穿无领对襟短衣，下穿宽腿长裤，头缠包头巾。颜色多为白、蓝、黑等素色。节日时穿绣花上衣，挎筒帕(挎包)。老年男子多穿长衫，保留更多传统元素。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\傣族\17.png" alt="傣族织锦" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">织锦工艺</h3>
+                    <p>傣族织锦是国家级非遗，以丝、棉为原料，采用传统腰机手工织造。图案多为孔雀、大象、花草等自然元素，色彩鲜艳，工艺精湛。广泛用于服饰、家居装饰等领域，是傣族文化的重要载体。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\傣族\18.png" alt="泼水节" class="gallery-img">
+                <div class="gallery-caption">泼水节</div>
+            </div>
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\傣族\19.png" alt="孔雀舞" class="gallery-img">
+                <div class="gallery-caption">孔雀舞</div>
+            </div>
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\傣族\20.png" alt="关门节" class="gallery-img">
+                <div class="gallery-caption">关门节</div>
+            </div>
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\傣族\21.png" alt="开门节" class="gallery-img">
+                <div class="gallery-caption">开门节</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>泼水节</h3>
+            <p>傣历新年(公历4月中旬)，是傣族最盛大的传统节日。人们互相泼水祝福，祈求洗去晦气，迎来好运。节日期间还有赛龙舟、放高升、赶摆、跳孔雀舞等活动，气氛热烈欢快。</p>
+            
+            <h3>孔雀舞</h3>
+            <p>傣族最具代表性的舞蹈，模仿孔雀优雅的姿态。舞者身着孔雀裙，动作柔美舒展，表现孔雀开屏、饮水、洗澡等姿态。是节日庆典和宗教活动中的重要表演项目。</p>
+            
+            <h3>关门节</h3>
+            <p>傣历九月十五(公历7月)，为期三个月的佛教斋戒期开始。期间僧侣安居寺内，信众减少娱乐活动，专心礼佛、听经、布施。是傣族重要的宗教节日。</p>
+            
+            <h3>开门节</h3>
+            <p>傣历十二月十五(公历10月)，标志着斋戒期结束。人们举行庆祝活动，向僧侣献供品，青年男女通过丢包、对歌等活动寻找意中人。村寨间互相拜访，热闹非凡。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>傣族主要聚居在云南省西双版纳傣族自治州(景洪市、勐海县、勐腊县)、德宏傣族景颇族自治州等地。西双版纳是傣族文化保存最完整的地区，被誉为"孔雀之乡"、"热带雨林王国"。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>西双版纳地处热带北部边缘，海拔在500-1000米之间，属热带季风气候。澜沧江纵贯全境，热带雨林茂密，动植物资源丰富。独特的自然环境孕育了傣族"水文化"和"森林文化"。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>西双版纳傣族文化全景展示</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
