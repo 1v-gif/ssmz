@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>景颇族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #8b0000;
+            --secondary-color: #556b2f;
+            --accent-color: #d2691e;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-color: beige;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>景颇族文化</h1>
+            <div class="subtitle">目瑙纵歌的传承者 · 中缅边境的山地民族</div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">景颇文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#cuisine">特色饮食</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="历史.png" alt="景颇族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>景颇族源于青藏高原的氐羌族群，唐代称"寻传蛮"，明清时期大规模南迁至滇西。分为景颇、载瓦、勒期、浪峨四大支系，有丰富的创世史诗《目瑙斋瓦》。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="人口分布.png" alt="景颇族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>中国境内景颇族约16万人(2020年)，主要聚居在德宏傣族景颇族自治州，其余分布在怒江、保山等地。境外缅甸克钦邦有约100万克钦族(与景颇族同源)。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="文字.png" alt="景颇族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>景颇语属汉藏语系藏缅语族景颇语支，有拉丁字母拼音文字(19世纪末传教士创制)。口头文学丰富，包括史诗、神话、歌谣等。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="female-costume">女性服饰</button>
+                <button class="tab-btn" data-tab="male-costume">男性服饰</button>
+                <button class="tab-btn" data-tab="accessories">特色配饰</button>
+            </div>
+            
+            <div id="female-costume" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="女性服饰.png" alt="景颇族女性服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="头饰.png" alt="景颇族头饰" class="gallery-img">
+                        <div class="gallery-caption">银泡服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="日常服饰.png" alt="景颇族日常服饰" class="gallery-img">
+                        <div class="gallery-caption">日常服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="细节服饰.png" alt="景颇族服饰细节" class="gallery-img">
+                        <div class="gallery-caption">织锦图案</div>
+                    </div>
+                </div>
+                <p>景颇族女性服饰以黑色为基调，装饰繁复：上衣为黑色对襟短衣，缀满银泡、银片和彩穗；下穿羊毛织筒裙，图案多为菱形几何纹；头饰包括银泡额带、红绒球和彩珠串；腰间系藤圈和银腰带。不同支系服饰略有差异，银泡数量和排列方式体现身份地位。</p>
+            </div>
+            
+            <div id="male-costume" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="男性服饰.png" alt="景颇族男性服饰" class="gallery-img">
+                        <div class="gallery-caption">传统男装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="短款服饰.png" alt="景颇族短款装束" class="gallery-img">
+                        <div class="gallery-caption">短袖服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="节日服饰.png" alt="景颇族节日服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                </div>
+                <p>男性服饰简洁庄重：头缠黑布包头或戴藤篾帽；上衣为黑色对襟短衣，缀少量银泡；下穿宽筒裤，小腿裹绑腿；腰间佩长刀和筒帕(挎包)。节日时，男子会佩戴银项圈、银耳筒和野猪牙装饰，彰显勇武。</p>
+            </div>
+            
+            <div id="accessories" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="首饰.png" alt="景颇族首饰" class="gallery-img">
+                        <div class="gallery-caption">银饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="长刀.png" alt="景颇族长刀" class="gallery-img">
+                        <div class="gallery-caption">景颇长刀</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="筒帕.png" alt="景颇族筒帕" class="gallery-img">
+                        <div class="gallery-caption">筒帕</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="织锦.png" alt="景颇族织锦" class="gallery-img">
+                        <div class="gallery-caption">织锦</div>
+                    </div>
+                </div>
+                <p>景颇族配饰工艺精湛：银泡服饰用数百个银泡钉缀成几何图案；长刀是男子必备工具和武器，刀鞘雕刻精美；筒帕(挎包)用棉线或毛线织成，图案象征吉祥；景颇织锦以红、黑为主色，纹样多为菱形、回形等几何图形。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="目瑙纵歌节.png" alt="目瑙纵歌节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">目瑙纵歌节</h3>
+                    <p><strong>时间：</strong>农历正月十五前后<br>
+                    <strong>特色：</strong>万人舞会：数千人跟随"瑙双"(领舞)绕场而舞；竖目瑙示栋：树立彩绘图腾柱；祭祀祖先：念诵《目瑙斋瓦》史诗，祭祀天神和祖先。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="新米节.png" alt="新米节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">新米节(尝新节)</h3>
+                    <p><strong>时间：</strong>稻谷成熟时(约8-9月)<br>
+                    <strong>特色：</strong>祭谷魂：用新米祭祀谷神；舂粑粑：用新米制作糍粑；歌舞欢庆：唱《种庄稼歌》，跳"整歌"舞蹈。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="能仙节.png" alt="能仙节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">能仙节(青年节)</h3>
+                    <p><strong>时间：</strong>农历三月<br>
+                    <strong>特色：</strong>对歌择偶：青年男女通过"汤碟"对唱情歌；丢包传情：姑娘向意中人投掷彩布包；集体欢舞：跳"同嘎"舞增进感情。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="cuisine" class="section">
+        <h2 class="section-title">特色饮食</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="食物1.jpg" alt="鬼鸡" class="gallery-img">
+                <div class="gallery-caption">鬼鸡</div>
+            </div>
+            <div class="gallery-item">
+                <img src="食物2.jpg" alt="舂菜" class="gallery-img">
+                <div class="gallery-caption">舂牛肉</div>
+            </div>
+            <div class="gallery-item">
+                <img src="食物3.png" alt="竹筒饭" class="gallery-img">
+                <div class="gallery-caption">竹筒饭</div>
+            </div>
+            <div class="gallery-item">
+                <img src="水酒.png" alt="水酒" class="gallery-img">
+                <div class="gallery-caption">水酒</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>鬼鸡</h3>
+            <p>景颇族特色凉菜，将乌鸡煮熟撕碎，拌入姜、蒜、芫荽、小米辣等佐料，酸辣开胃。传说此菜源于祭祀仪式，现已成为待客佳肴。</p>
+            
+            <h3>舂菜</h3>
+            <p>景颇族独特烹饪方式，将食材(鱼、虾、菜等)与香料放入竹筒或木臼中舂碎混合，风味独特。代表菜有舂干巴、舂鱼等。</p>
+            
+            <h3>绿叶宴</h3>
+            <p>景颇族传统宴席形式，所有菜肴用芭蕉叶包裹盛放，包括烤鱼、烤肉、野菜、竹筒饭等，体现生态饮食理念。</p>
+            
+            <h3>水酒</h3>
+            <p>景颇族传统酒饮，用糯米或红米发酵制成，味甜微酸，用竹筒共饮。是待客和节庆必备，有"无酒不成礼"之说。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>景颇族主要分布在云南省德宏傣族景颇族自治州(芒市、陇川、盈江、瑞丽)，以及怒江傈僳族自治州、保山市等地。境外缅甸克钦邦有大量同源民族克钦族分布。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>景颇族多居住于横断山脉南段的中低山地带，海拔多在800-2000米之间。村寨多建于山腰台地，形成"山有多高，水有多高，寨有多高"的独特分布格局。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>景颇族文化全景展示 </p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
