@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>壮族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #e74c3c;
+            --secondary-color: #27ae60;
+            --accent-color: #f39c12;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-image: url('1.JPG');
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>壮族文化</h1>
+            <div class="subtitle">中国人口最多的少数民族，灿烂的稻作文化与山歌传统</div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">壮族文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#cuisine">特色饮食</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="2.png" alt="壮族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>壮族是中国人口最多的少数民族，有着悠久的历史。壮族的先民是古代百越族群中的西瓯、骆越人，早在先秦时期就生活在岭南地区。壮族人民在长期的历史发展中创造了灿烂的文化，如铜鼓文化、花山岩画等。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="3.png" alt="壮族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>壮族人口约1800万，主要分布在广西壮族自治区，占全国壮族人口的85%以上。此外，在云南、广东、贵州、湖南等省也有分布。广西的南宁、柳州、桂林、百色、河池等地是壮族主要聚居区。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="4.png" alt="壮族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>壮语属汉藏语系壮侗语族壮傣语支，分北部和南部两大方言。1957年创制的壮文是一种拼音文字，以拉丁字母为基础。壮语民歌"山歌"是壮族文化的重要载体，被誉为"歌海"。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="female-costume">女性服饰</button>
+                <button class="tab-btn" data-tab="male-costume">男性服饰</button>
+                <button class="tab-btn" data-tab="accessories">特色配饰</button>
+            </div>
+            
+            <div id="female-costume" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="5.png" alt="传统壮族女装" class="gallery-img">
+                        <div class="gallery-caption">日常女装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="6.png" alt="盛装服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="7.png" alt="新娘服饰" class="gallery-img">
+                        <div class="gallery-caption">新娘礼服</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="8.png" alt="现代改良服饰" class="gallery-img">
+                        <div class="gallery-caption">改良服饰</div>
+                    </div>
+                </div>
+                <p>壮族女性服饰以黑色或深蓝色为主色调，上衣多为对襟或偏襟短衣，下着百褶裙或宽腿裤。衣领、袖口、襟边常绣有精美的花纹图案。节日盛装则更加华丽，银饰丰富，体现了壮族妇女的巧手和审美。</p>
+            </div>
+            
+            <div id="male-costume" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="9.png" alt="壮族男性服饰" class="gallery-img">
+                        <div class="gallery-caption">传统男装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="10.png" alt="壮族日常服饰" class="gallery-img">
+                        <div class="gallery-caption">劳作服装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="11.png" alt="壮族节日服饰" class="gallery-img">
+                        <div class="gallery-caption">节日服饰</div>
+                    </div>
+                </div>
+                <p>壮族男性传统服饰较为简朴，多为黑色或深蓝色对襟上衣，下着宽腿长裤，头包黑色或花格头巾。节日期间，男子也会穿上绣花上衣，佩戴银饰，展现民族特色。部分地区男子有穿裙的习惯，称为"裙裤"。</p>
+            </div>
+            
+            <div id="accessories" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="12.png" alt="壮族头饰" class="gallery-img">
+                        <div class="gallery-caption">绣花头巾</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="13.png" alt="壮族颈饰" class="gallery-img">
+                        <div class="gallery-caption">银项圈</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="14.png" alt="壮族手饰" class="gallery-img">
+                        <div class="gallery-caption">银手镯</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="15.png" alt="壮族腰饰" class="gallery-img">
+                        <div class="gallery-caption">绣花挎包</div>
+                    </div>
+                </div>
+                <p>壮族银饰工艺精湛，妇女盛装时佩戴的银项圈、银手镯、银耳环等饰品重达数公斤。绣花挎包是壮族妇女的重要配饰，既是实用品又是工艺品。头巾是壮族服饰的重要组成部分，不同地区的头巾包法各具特色。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="16.png" alt="三月三歌节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">三月三歌节</h3>
+                    <p><strong>时间：</strong>农历三月初三<br>
+                    <strong>特色：</strong>是壮族最盛大的传统节日，又称"歌圩节"。这天，壮族青年男女身着盛装，聚集在山坡、河边对唱山歌，以歌传情。还有抛绣球、碰彩蛋、打铜鼓等民俗活动，场面热闹非凡。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="17.png" alt="中元节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">中元节</h3>
+                    <p><strong>时间：</strong>农历七月十四至十六<br>
+                    <strong>特色：</strong>壮族称为"鬼节"，是祭祖的重要节日。家家户户准备丰盛的祭品，祭祀祖先。夜晚在河边放河灯，为亡灵引路。还有唱师公戏、跳铜鼓舞等民俗活动。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="18.png" alt="壮年" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">壮年</h3>
+                    <p><strong>时间：</strong>农历正月初一至十五<br>
+                    <strong>特色：</strong>是壮族的新年，与汉族春节时间相同但习俗有别。除夕夜全家团聚吃"年粽"，初一早晨喝"智慧水"。节日期间有舞龙舞狮、唱山歌、打铜鼓等庆祝活动，气氛热烈。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="cuisine" class="section">
+        <h2 class="section-title">特色饮食</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="19.png" alt="五色糯米饭" class="gallery-img">
+                <div class="gallery-caption">五色糯米饭</div>
+            </div>
+            <div class="gallery-item">
+                <img src="20.png" alt="酸鱼" class="gallery-img">
+                <div class="gallery-caption">酸鱼</div>
+            </div>
+            <div class="gallery-item">
+                <img src="21.png" alt="油茶" class="gallery-img">
+                <div class="gallery-caption">油茶</div>
+            </div>
+            <div class="gallery-item">
+                <img src="22.png" alt="粽子" class="gallery-img">
+                <div class="gallery-caption">壮家粽子</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>五色糯米饭</h3>
+            <p>壮族传统美食，用天然植物染料将糯米染成红、黄、紫、黑、白五种颜色蒸制而成。色彩鲜艳，象征五谷丰登、吉祥如意。通常在三月三歌节、清明节等重要节日制作食用。</p>
+            
+            <h3>酸鱼</h3>
+            <p>壮族特色腌制品，将鲜鱼与糯米、辣椒等配料一起腌制发酵而成。酸香可口，开胃下饭，可保存数月不坏。体现了壮族适应南方湿热气候的饮食智慧。</p>
+            
+            <h3>油茶</h3>
+            <p>壮族日常饮品，用茶叶、生姜、蒜米等炒香后加水煮沸，再加入炒米、花生、葱花等配料。味道浓郁，既可解渴又能充饥，是壮族待客的重要食品。</p>
+            
+            <h3>壮家粽子</h3>
+            <p>与汉族粽子不同，壮族粽子多用大张的竹叶或芭蕉叶包裹，体型硕大，有的重达数斤。内馅丰富，有猪肉、绿豆、板栗等多种口味。是节日和喜庆场合的必备食品。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>壮族主要聚居在广西壮族自治区，占全区总人口的32%左右。其中南宁、柳州、百色、河池、崇左等地是壮族人口最集中的地区。此外，云南文山、广东连山、贵州从江等地也有较多壮族分布。这些地区多为喀斯特地貌，山清水秀，气候温暖湿润。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>壮族聚居区地处云贵高原东南边缘，属典型的喀斯特地貌，多溶洞、地下河和峰林。气候属亚热带季风气候，温暖湿润，雨量充沛。左江、右江、红水河等河流纵横交错，形成众多河谷盆地，适宜水稻种植。独特的自然环境塑造了壮族"那文化"(稻作文化)和"干栏式"建筑风格。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>壮族文化全景展示</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
