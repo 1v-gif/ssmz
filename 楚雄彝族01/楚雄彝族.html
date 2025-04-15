@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楚雄彝族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #d35400;
+            --secondary-color: #2980b9;
+            --accent-color: #f39c12;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-image: url(背景图.jpg);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://example.com/yizu-header.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>楚雄彝族文化</h1>
+            <div class="subtitle">探索千年传承的民族瑰宝</div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">彝族文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#cuisine">特色饮食</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="01.png" alt="彝族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>云南省楚雄彝族历史悠久，是古滇国和南诏文化的重要传承者。彝族先民属氐羌族群，汉代迁入云南，唐代形成强大部落，
+                        明清时期融入多元文化。楚雄作为彝族聚居区，至今保留着十月太阳历、火把节等独特传统，被誉为"中国彝族文化大观园"。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="02.png" alt="彝族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>彝族是中国第六大少数民族，主要分布在云南、四川、贵州、广西四省区。云南楚雄彝族自治州和红河哈尼族彝族自治州是最大聚居区，
+                        四川凉山彝族自治州则是全国最大的彝族聚居区。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="03.png" alt="彝族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>楚雄彝族自治州是中国彝族文化核心区，彝族人口约占全州三分之一。这里完整保留着彝族十月太阳历、火把节等非物质文化遗产，
+                        是研究彝族历史、语言、文字的重要地区。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="female-costume">女性服饰</button>
+                <button class="tab-btn" data-tab="male-costume">男性服饰</button>
+                <button class="tab-btn" data-tab="accessories">特色配饰</button>
+            </div>
+            
+            <div id="female-costume" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="04.png" alt="彝族女性服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="05.png" alt="彝族头饰" class="gallery-img">
+                        <div class="gallery-caption">鸡冠帽</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="06.png" alt="彝族日常服饰" class="gallery-img">
+                        <div class="gallery-caption">日常服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="07.png" alt="彝族服饰细节" class="gallery-img">
+                        <div class="gallery-caption">刺绣纹样</div>
+                    </div>
+                </div>
+                <p>楚雄彝族女性服饰以鲜艳多彩著称，上衣多为右衽大襟衣，下着百褶裙。最具特色的是"鸡冠帽"，形似雄鸡冠，象征吉祥。服饰上绣有太阳、月亮、星星等图案，反映了彝族对自然的崇拜。不同年龄段的女性服饰也有明显区别。</p>
+            </div>
+            
+            <div id="male-costume" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="08.png" alt="彝族男性服饰" class="gallery-img">
+                        <div class="gallery-caption">传统男装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="09.png" alt="彝族猎人装束" class="gallery-img">
+                        <div class="gallery-caption">毕摩服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="10.png" alt="彝族节日服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                </div>
+                <p>彝族男性服饰相对简洁，多为对襟短上衣和宽腿裤，头缠黑色或蓝色包头。毕摩(祭司)的服饰最为独特，常配有法帽、法衣等宗教法器。男性服饰以黑、蓝、青为主色调，体现了彝族崇尚黑色的传统。</p>
+            </div>
+            
+            <div id="accessories" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="11.png" alt="彝族首饰" class="gallery-img">
+                        <div class="gallery-caption">银饰项链</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="12.png" alt="彝族腰饰" class="gallery-img">
+                        <div class="gallery-caption">刺绣腰带</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="13.png" alt="彝族挎包" class="gallery-img">
+                        <div class="gallery-caption">绣花挎包</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="14.png" alt="彝族刀具" class="gallery-img">
+                        <div class="gallery-caption">银饰佩刀</div>
+                    </div>
+                </div>
+                <p>彝族配饰工艺精湛，尤以银饰闻名。女性常佩戴银耳环、银项链、银手镯等，重达数斤。腰带和挎包上的刺绣图案多取材于自然和生活场景。男性则喜欢佩戴银饰腰刀，既是装饰品也是实用工具。这些配饰往往代代相传，是家族财富的象征。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="15.png" alt="火把节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">火把节(彝族新年)</h3>
+                    <p><strong>时间：</strong>农历六月二十四日前后<br>
+                    <strong>特色：</strong>点燃火把驱邪祈福，举行斗牛、摔跤、歌舞等庆祝活动。夜晚人们手持火把巡游田间，祈求丰收。是彝族最隆重的传统节日，被誉为"东方狂欢节"。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="16.png" alt="十月年" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">十月年(彝族历新年)</h3>
+                    <p><strong>时间：</strong>农历十月(彝族太阳历新年)<br>
+                    <strong>特色：</strong>杀年猪、打糍粑，祭祀祖先。按照彝族十月太阳历计算，是彝族传统的新年。期间举行歌舞、赛马等活动，展示彝族传统文化。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="17.png" alt="赛装节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">赛装节(服饰展示)</h3>
+                    <p><strong>时间：</strong>农历正月十五<br>
+                    <strong>特色：</strong>彝族姑娘们身着盛装比美，展示精湛的刺绣工艺。同时举行歌舞表演、体育竞赛等活动，是彝族服饰文化的重要展示平台。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="cuisine" class="section">
+        <h2 class="section-title">特色饮食</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="18.png" alt="坨坨肉" class="gallery-img">
+                <div class="gallery-caption">坨坨肉</div>
+            </div>
+            <div class="gallery-item">
+                <img src="19.png" alt="苦荞粑粑" class="gallery-img">
+                <div class="gallery-caption">苦荞粑粑</div>
+            </div>
+            <div class="gallery-item">
+                <img src="20.png" alt="酸菜鱼" class="gallery-img">
+                <div class="gallery-caption">酸菜鱼</div>
+            </div>
+            <div class="gallery-item">
+                <img src="21.png" alt="包谷酒" class="gallery-img">
+                <div class="gallery-caption">包谷酒</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>坨坨肉</h3>
+            <p>彝族传统美食，将猪肉切成大块煮熟后直接食用，保留了肉的原汁原味。通常在节日或招待贵客时制作，体现了彝族豪爽的性格和待客之道。</p>
+            
+            <h3>苦荞粑粑</h3>
+            <p>用苦荞面制成的传统食品，是彝族山区的主食之一。苦荞具有降血糖、降血脂的功效，反映了彝族对高山作物的智慧利用。</p>
+            
+            <h3>酸菜鱼</h3>
+            <p>彝族特色菜肴，用自制酸菜和鲜鱼烹制，酸辣开胃。酸菜是彝族保存蔬菜的传统方法，这种饮食方式适应了山区的生活环境。</p>
+            
+            <h3>包谷酒</h3>
+            <p>彝族传统酒饮，用玉米发酵酿制而成，酒精度适中，味道甘甜。是彝族待客和节庆必备饮品，体现了彝族的酒文化。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>楚雄彝族自治州是云南省彝族主要聚居区之一，全州彝族人口约70万，占全州总人口的29%。除楚雄外，云南红河、玉溪、昆明等地也有大量彝族分布。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>楚雄州位于滇中高原，地形以山地为主，海拔差异大。彝族村寨多建于半山腰，依山就势，形成独特的山地聚落景观。梯田文化是彝族适应山地环境的重要体现。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>楚雄彝族文化展示</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
