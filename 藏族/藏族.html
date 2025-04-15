@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>藏族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #d35400;
+            --secondary-color: #2980b9;
+            --accent-color: #f39c12;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-image: url(1.JPG);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>藏族文化</h1>
+            <div class="subtitle">藏族扎根雪域，传承独特艺术、信仰与习俗 </div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">藏族文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#cuisine">特色饮食</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="2.png" alt="藏族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>藏族是中国古老民族之一，历史悠久，使用藏语藏文。藏族有着深厚的历史渊源，其祖先可追溯到远古时期的吐蕃等部落。经过长期发展，形成了独特的文化和传统。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="3.png" alt="藏族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>人口分布上，主要集中在西藏自治区、青海、四川、甘肃、云南等省区。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="4.png" alt="藏族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>语言文字方面，藏语属汉藏语系藏缅语族藏语支，有卫藏、康巴、安多等方言。藏文是一种拼音文字，历史悠久，为藏族文化的传承和发展起到了重要作用。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="female-costume">女性服饰</button>
+                <button class="tab-btn" data-tab="male-costume">男性服饰</button>
+                <button class="tab-btn" data-tab="accessories">特色配饰</button>
+            </div>
+            
+            <div id="female-costume" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="5.png" alt="传统牧区服饰" class="gallery-img">
+                        <div class="gallery-caption">牧区服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="6.png" alt="节庆盛装服饰" class="gallery-img">
+                        <div class="gallery-caption">节日服饰</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="7.png" alt="日常劳作服饰" class="gallery-img">
+                        <div class="gallery-caption">日常劳作服</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="8.png" alt="现代改良服饰" class="gallery-img">
+                        <div class="gallery-caption">改良服饰</div>
+                    </div>
+                </div>
+                <p></p>
+            </div>
+            
+            <div id="male-costume" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="9.png" alt="藏族男性服饰" class="gallery-img">
+                        <div class="gallery-caption">传统男装</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="10.png" alt="藏族日常服饰" class="gallery-img">
+                        <div class="gallery-caption">日常劳作服</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="11.png" alt="藏族节日服饰" class="gallery-img">
+                        <div class="gallery-caption">节日盛装</div>
+                    </div>
+                </div>
+                <p>藏族男性传统服饰多为藏袍，面料厚实，常配腰带与皮靴，彰显英气，便于劳作与适应高原气候 。
+                    藏男服饰以袍装为主，色彩质朴，领口袖口镶边精致，腰间挂配饰，兼具实用与独特民族风情。
+                    藏族男性身着的藏袍，款式宽松，毛料质地保暖佳，搭配头饰与藏刀，尽显剽悍豪迈气质 。</p>
+            </div>
+            
+            <div id="accessories" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="12.png" alt="藏族头饰" class="gallery-img">
+                        <div class="gallery-caption">巴珠</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="13.png" alt="藏族颈饰" class="gallery-img">
+                        <div class="gallery-caption">嘎乌</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="14.png" alt="藏族手饰" class="gallery-img">
+                        <div class="gallery-caption">手镯</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="15.png" alt="藏族腰饰" class="gallery-img">
+                        <div class="gallery-caption">藏刀</div>
+                    </div>
+                </div>
+                <p>藏刀寒光利刃，鞘柄镶宝雕花，兼具实用与艺术，尽显藏民豪迈。
+                    嘎乌盒内藏圣物，金银雕琢精美，随身佩戴祈佑平安。
+                    藏族手镯材质多元，银饰雕花、玉石温润，点缀腕间风情。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="16.png" alt="藏历新年" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">藏历新年</h3>
+                    <p><strong>时间：</strong>依据藏历确定的，通常在公历 1 月下旬到 3 月上旬之间变动。<br>
+                    <strong>特色：</strong>是藏族最隆重的节日之一，相当于汉族的春节。前一天人们会大扫除、贴窗花、准备年货。除夕之夜，点燃柏枝、燃放鞭炮祈求平安吉祥，还会准备年夜饭，有特色美食除夕汤。新年期间，人们会穿藏装、互献哈达、拜年，还会跳锅庄舞、玩藏式骰子、唱藏戏等。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="17 .png" alt="赛马节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">赛马节</h3>
+                    <p><strong>时间：</strong>农历五月五日举行<br>
+                    <strong>特色：</strong>中甸城万人空巷，人们到五凤山下参观骑手们的精彩骑赛。如今，香格里拉赛马节已成为藏区开展精神文明活动和物资交流的盛会。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="18.png" alt="舒古尼苏节" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">舒古尼苏节</h3>
+                    <p><strong>时间：</strong>农历五月初五举行<br>
+                    <strong>特色：</strong>是迪庆云岭一带的古老藏族节日，节日期间全村老小集体聚餐，还有泼水、斗牛、做游戏等环节，人们会跳传统弦子锅庄，品尝肉酒、青稞酒、煮肉等。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="cuisine" class="section">
+        <h2 class="section-title">特色饮食</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="19.png" alt="糌粑" class="gallery-img">
+                <div class="gallery-caption">糌粑</div>
+            </div>
+            <div class="gallery-item">
+                <img src="20.png" alt="风干肉" class="gallery-img">
+                <div class="gallery-caption">风干肉</div>
+            </div>
+            <div class="gallery-item">
+                <img src="21.png" alt="酥油茶" class="gallery-img">
+                <div class="gallery-caption">酥油茶</div>
+            </div>
+            <div class="gallery-item">
+                <img src="22.png" alt="青稞酒" class="gallery-img">
+                <div class="gallery-caption">青稞酒</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>糌粑</h3>
+            <p>由青稞经除杂、清洗、晾干、翻炒、磨粉等工艺制成的粉状食物，也被称为青稞炒面。食用时用少量的酥油茶、奶渣、糖等搅拌均匀，用手捏成团即可。糌粑便于携带又易于贮藏，热量高、营养丰富，是藏族牧民的传统主食。</p>
+            
+            <h3>风干肉</h3>
+            <p>一般在入冬后宰杀的牛、羊一时食用不了，多切成条块，挂在通风之处，使其风干。冬季制作风干肉既可防腐，又可使肉中的血水冻附，能保持风干肉的新鲜色味，食用时可直接撕咬，也可蒸熟后再吃。</p>
+            
+            <h3>酥油茶</h3>
+            <p>是藏族人民的主要日常饮品，由酥油、茶叶、核桃、芝麻、麻籽、盐、蛋泡等原料制成。先将茶叶熬煮成浓茶，然后倒入特制的酥油筒中，加入酥油及其他配料，上下来回提打至水乳交融浑为一体即成。酥油茶具有浓郁的奶香和茶香，既能解渴又能御寒，还可以缓解高原反应。</p>
+            
+            <h3>青稞酒</h3>
+            <p>以青稞为原料酿造而成，度数较低，口感清香醇厚。在藏历新年、婚礼等重要节日和庆典活动中，青稞酒是必不可少的饮品，人们会相互敬酒，表达祝福和喜悦之情。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>迪庆藏族自治州位于云南西北部，地处滇、川、藏交界处，是藏族聚居地。这里藏民多分布于香格里拉市、德钦县、维西傈僳族自治县。州内有松赞林寺等宗教圣地，藏族传统建筑、服饰、歌舞随处可见，藏族文化氛围浓郁 。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>迪庆位于云南省西北部，地处滇、川、藏交界处，属横断山脉 “三江并流” 地带1。这里地势北高南低，“三山挟两江”，海拔高差大1。气候垂直变化明显，兼具温带、寒温带及北亚热带气候特征1。地下矿产丰富，地表河流湖泊众多，是资源富集之地。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>藏族文化全景展示</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
